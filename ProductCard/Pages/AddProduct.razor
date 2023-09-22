@@ -1,0 +1,37 @@
+﻿
+
+@page "/add-product"
+@using ProductCard.Data;
+@using ProductCard.Models;
+@inject ProductService  productService;
+@inject NavigationManager navManager;
+
+
+<h3>Add Product</h3>
+
+
+<AddEditProduct Product="product" SaveProduct="SaveProduct"></AddEditProduct>
+
+
+@code {
+    private ProductViewModel product;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        product = new ProductViewModel();
+    }
+
+
+    private void SaveProduct(ProductViewModel productViewModel)
+    {
+        productService.AddProduct(new Product
+            {
+                ProductName = productViewModel.ProductName,
+                Price = productViewModel.Price,
+                Image = productViewModel.Image,
+        });
+
+        navManager.NavigateTo("./productlist");
+    }
+}

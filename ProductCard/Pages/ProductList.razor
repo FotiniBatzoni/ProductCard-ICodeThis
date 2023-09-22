@@ -1,0 +1,54 @@
+﻿@page "/productlist"
+@using ProductCard.Data;
+@using ProductCard.Models;
+@inject ProductService productService;
+
+<h3>Product List</h3>
+
+<a href="./add-product">Add Product</a>
+<br />
+<br />
+
+@if (productList == null || productList.Count == 0)
+{
+    <p>No Products to Display</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        @foreach (var product in productList)
+        {
+            <tr>
+                <ProductDetail Product="product" DeleteProduct="DeleteProduct"></ProductDetail>
+            </tr>
+        }
+    </table>
+}
+
+
+
+
+@code {
+    private List<Product> productList;
+
+    protected override void OnInitialized()
+    {
+        productList = productService.GetProducts();
+        base.OnInitialized();
+    }
+
+    private void DeleteProduct(string productId)
+    {
+        productService.DeleteProduct(productId);
+        productList.RemoveAll(a => a.ProductName == productId);
+    }
+ }

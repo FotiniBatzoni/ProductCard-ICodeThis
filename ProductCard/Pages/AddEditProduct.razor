@@ -1,0 +1,31 @@
+﻿@using ProductCard.Data;
+@using ProductCard.Models;
+
+
+<EditForm Model="@Product" OnValidSubmit="Save">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+
+    <InputText @bind-Value="@Product.ProductName" placeholder="Name" class="form-control"></InputText><br />
+    <ValidationMessage For="(() => Product.ProductName )"></ValidationMessage><br />
+
+    <InputNumber @bind-Value="@Product.Price" placeholder="Price" class="form-control"></InputNumber><br />
+    <ValidationMessage For="(() => Product.Price )"></ValidationMessage><br />
+
+    <InputText @bind-Value="@Product.Image" placeholder="Image" class="form-control"></InputText><br />
+
+    <button type="submit" class="btn btn-primary">Save Member</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public ProductViewModel Product { get; set; }
+
+    [Parameter]
+    public EventCallback<ProductViewModel> SaveProduct { get; set; }
+
+    private void Save()
+    {
+        SaveProduct.InvokeAsync(Product);
+    }
+
+}

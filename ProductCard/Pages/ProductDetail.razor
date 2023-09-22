@@ -1,0 +1,39 @@
+﻿@using ProductCard.Data;
+@inject ProductService productService;
+@inject NavigationManager navManager;
+
+<td>
+    @Product.ProductName
+</td>
+<td>
+    @Product.Price
+</td>
+<td >
+    <img src="@Product.Image"/>
+ 
+</td>
+<td>
+    <button @onclick="Edit">Edit</button>
+</td>
+<td>
+    <button @onclick="Delete">Delete</button>
+</td>
+<hr/>
+
+@code {
+    [Parameter]
+    public Product Product { get; set; }
+
+    [Parameter]
+    public EventCallback<string> DeleteProduct { get; set; }
+
+    private void Delete()
+    {
+        DeleteProduct.InvokeAsync(Product.ProductId);
+    }
+
+    public void Edit()
+    {
+        navManager.NavigateTo($"./update-product/{Product.ProductId}");
+    }
+}
