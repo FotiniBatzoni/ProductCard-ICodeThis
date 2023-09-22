@@ -1,0 +1,44 @@
+﻿@page "/update-product/{ProductId}"
+@using ProductCard.Data;
+@using ProductCard.Models;
+@inject ProductService productService;
+@inject NavigationManager navManager;
+
+<h3>Update Member</h3>
+
+
+<AddEditProduct Product="product" SaveProduct="SaveProduct"></AddEditProduct>
+
+@code {
+    [Parameter]
+    public string ProductId { get; set; }
+    private ProductViewModel product;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        var dbProduct = productService.GetProductById(ProductId);
+        product = new ProductViewModel
+            {
+                ProductId = dbProduct.ProductId,
+                ProductName = dbProduct.ProductName,
+                Price = dbProduct.Price,
+                Image = dbProduct.Image,
+            };
+    }
+
+    private void SaveProduct(ProductViewModel productViewModel)
+    {
+        var dbProduct = new Product
+            {
+                ProductId = productViewModel.ProductId,
+                ProductName = productViewModel.ProductName,
+                Price = productViewModel.Price,
+                Image = productViewModel.Image,
+            };
+
+        productService.EditProduct(dbProduct);
+        navManager.NavigateTo("./productlist");
+    }
+}
+

@@ -21,7 +21,7 @@ namespace ProductCard.Data
             return _products.Find(filter).ToList();
         }
 
-        public Product GetMemberById(string productId)
+        public Product GetProductById(string productId)
         {
             var filter = Builders<Product>.Filter.Eq(a => a.ProductId, productId);
             return _products.Find(filter).FirstOrDefault();

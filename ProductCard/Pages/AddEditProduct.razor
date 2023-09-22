@@ -2,19 +2,29 @@
 @using ProductCard.Models;
 
 
-<EditForm Model="@Product" OnValidSubmit="Save">
-    <DataAnnotationsValidator></DataAnnotationsValidator>
 
-    <InputText @bind-Value="@Product.ProductName" placeholder="Name" class="form-control"></InputText><br />
-    <ValidationMessage For="(() => Product.ProductName )"></ValidationMessage><br />
+<div class="d-flex justify-content-center">
+    <EditForm Model="@Product" OnValidSubmit="Save">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
 
-    <InputNumber @bind-Value="@Product.Price" placeholder="Price" class="form-control"></InputNumber><br />
-    <ValidationMessage For="(() => Product.Price )"></ValidationMessage><br />
+        <div class="form-group">
+            <InputText @bind-Value="@Product.ProductName" placeholder="Name" class="form-control m-5" style="width:650px;" />
+            <ValidationMessage For="(() => Product.ProductName )" />
+        </div>
 
-    <InputText @bind-Value="@Product.Image" placeholder="Image" class="form-control"></InputText><br />
+        <div class="form-group">
+            <InputNumber @bind-Value="@Product.Price" placeholder="Price" class="form-control  m-5"  style="width:650px;"/>
+            <ValidationMessage For="(() => Product.Price )" />
+        </div>
 
-    <button type="submit" class="btn btn-primary">Save Member</button>
-</EditForm>
+        <div class="form-group">
+            <InputText @bind-Value="@Product.Image" placeholder="Image" class="form-control  m-5" style="width:650px;"/>
+        </div>
+
+        <button type="submit" class="btn btn-lg  m-5" style="background-color:rgba(131,58,180,1); color:white">Save Member</button>
+    </EditForm>
+</div>
+
 
 @code {
     [Parameter]

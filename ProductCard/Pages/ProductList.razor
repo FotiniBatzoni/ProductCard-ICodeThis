@@ -3,9 +3,11 @@
 @using ProductCard.Models;
 @inject ProductService productService;
 
-<h3>Product List</h3>
+<h3 class="text-center m-3">Product List</h3>
 
-<a href="./add-product">Add Product</a>
+<button class="btn btn-lg m-5" style="background-color:rgba(131,58,180,1)">
+    <a href="./add-product" class="text-white ">Add Product</a>
+</button>
 <br />
 <br />
 
@@ -15,14 +17,14 @@
 }
 else
 {
-    <table class="table table-striped">
+    <table class="table table-striped" >
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Image</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th style="color:rgba(131,58,180,1);" class="m-3" >Name</th>
+                <th style="color:rgba(131,58,180,1); ">Price</th>
+                <th style="color:rgba(131,58,180,1); ">Image</th>
+                <th style="color:rgba(131,58,180,1);">Edit</th>
+                <th style="color:rgba(131,58,180,1);">Delete</th>
             </tr>
         </thead>
         @foreach (var product in productList)
