@@ -3,46 +3,56 @@
 @using ProductCard.Models;
 @inject ProductService productService;
 
-<h3 class="text-center m-3">Product List</h3>
 
-<button class="btn btn-lg m-5" style="background-color:rgba(131,58,180,1)">
-    <a href="./add-product" class="text-white ">Add Product</a>
-</button>
-<br />
-<br />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+            <h3 class="text-center m-3">Product List</h3>
 
-@if (productList == null || productList.Count == 0)
-{
-    <p>No Products to Display</p>
-}
-else
-{
-    <table class="table table-striped" >
-        <thead>
-            <tr>
-                <th style="color:rgba(131,58,180,1);" class="m-3" >Name</th>
-                <th style="color:rgba(131,58,180,1); ">Price</th>
-                <th style="color:rgba(131,58,180,1); ">Image</th>
-                <th style="color:rgba(131,58,180,1);">Edit</th>
-                <th style="color:rgba(131,58,180,1);">Delete</th>
-            </tr>
-        </thead>
-        @foreach (var product in productList)
-        {
-            <tr>
-                <ProductDetail Product="product" DeleteProduct="@DeleteProduct"></ProductDetail>
-            </tr>
-        }
-    </table>
-}
+            <button class="btn btn-lg m-5" style="background-color:rgba(131,58,180,1)">
+                <a href="./add-product" class="text-white ">Add Product</a>
+            </button>
+            <br />
+            <br />
 
-<DeleteConfirmation @ref="deleteConfirmation" OnConfirmed="OnDeleteConfirmed"></DeleteConfirmation>
+            @if (productList == null || productList.Count == 0)
+            {
+
+                     <p>No Products to Display</p>
+     
+            }
+            else
+            {
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="color: rgba(131, 58, 180, 1);" class="m-3">Name</th>
+                            <th style="color: rgba(131, 58, 180, 1);">Price</th>
+                            <th style="color: rgba(131, 58, 180, 1);">Image</th>
+                            <th style="color: rgba(131, 58, 180, 1);">Edit</th>
+                            <th style="color: rgba(131, 58, 180, 1);">Delete</th>
+                        </tr>
+                    </thead>
+                    @foreach (var product in productList)
+                    {
+                        <tr>
+                            <ProductDetail Product="product" DeleteProduct="@DeleteProduct"></ProductDetail>
+                        </tr>
+                    }
+                </table>
+          
+            }
+        </div>
+    </div>
+</div>
+
+
 
 
 
 
 @code {
-    private DeleteConfirmation deleteConfirmation;
 
     private List<Product> productList;
 
@@ -58,21 +68,5 @@ else
     {
         productService.DeleteProduct(productId);
         productList.RemoveAll(a => a.ProductName == productId);
-    }
-
-    private async Task RequestPermission(Product product)
-    {
-        deleteConfirmation.BodyContent = $"Do you need to delete {product.ProductName} from the list";
-        deleteConfirmation.ProductToDelete = product;
-        deleteConfirmation.Show();
-    }
-
-    public void Show() => displayProducts = true;
-    public void Hide() => displayProducts = false;
-
-    private async Task OnDeleteConfirmed(Product product)
-    {
-        productList.Remove(product);
-        deleteConfirmation.Hide();
     }
 }

@@ -5,33 +5,35 @@
 {
     <div class="modal-backdrop show"></div>
     <div class="modal fade show" style="display:block" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class=" = modal-header">
-                    <h5 class="modal-title">Confirm Delete</h5>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content mx-auto">
+                <div class="modal-header" style="background-color: rgb(253, 218, 13)">
+                    <h5 class="modal-title">Are you sure you want to delete the product?</h5>
                     <button type="button" @onclick="Hide" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <p>@BodyContent</p>
+                <div class="modal-body" style="background-color: rgb(253, 218, 13)">
                 </div>
-                <div class="moda-footer">
-                    <button type="button" @onclick="Hide" class="btn btn-secondary m-1" data-bs-dismiss="modal">Close</button>
+                <div class="modal-footer" style="background-color: rgb(253, 218, 13)">
+                    <button type="button" @onclick="Hide" class="btn btn-secondary m-1">Close</button>
                     <button type="button" @onclick="Confirm" class="btn btn-danger">Confirm</button>
                 </div>
             </div>
         </div>
     </div>
+
 }
 
 
 
 @code {
-    private bool showPopup = false;
+    private bool showPopup = true;
+    private bool confirmed = true; // Add a boolean property to track confirmation
+
     public Product ProductToDelete { get; set; }
-    public string BodyContent { get; set; }
+  
 
     [Parameter]
-    public EventCallback<Product> OnConfirmed { get; set; }
+    public EventCallback<bool> OnConfirmed { get; set; }
 
     public void Show() => showPopup = true;
 
@@ -39,6 +41,7 @@
 
     private async Task Confirm()
     {
-        await OnConfirmed.InvokeAsync(ProductToDelete);
+         confirmed = true;
+        await OnConfirmed.InvokeAsync(confirmed);
     }
 }

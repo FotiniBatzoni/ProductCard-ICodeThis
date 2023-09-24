@@ -1,7 +1,9 @@
 using ProductCard.Data;
 
 
+
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 ConfigureServices(builder.Services);
@@ -24,6 +26,7 @@ app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+app.UseAuthentication();;
 
 app.Run();
 
@@ -34,8 +37,4 @@ static void ConfigureServices(IServiceCollection services)
     services.AddServerSideBlazor();
 
     services.AddTransient<ProductService>();
-
-
-
-    services.AddSingleton<WeatherForecastService>();
 }

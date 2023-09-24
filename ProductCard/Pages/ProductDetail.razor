@@ -16,9 +16,16 @@
     <button class="btn btn-lg" style="background-color:rgba(131,58,180,1); color:white" @onclick="Edit">Edit</button>
 </td>
 <td>
-    <button class="btn btn-lg" style="background-color:rgba(131,58,180,1); color:white" @onclick="Delete">Delete</button>
+    <button class="btn btn-lg" style="background-color:rgba(131,58,180,1); color:white" @onclick="ShowDeleteConfirmation">Delete</button>
+    @if (isDeleteConfirmationVisible)
+    {
+        <DeleteConfirmation OnConfirmed="(confirmed) => ConfirmDeleteHandler(confirmed)" @ref="confirmationModal"></DeleteConfirmation>
+    }
 </td>
 <hr style="color:rgba(217,108,233,1)" />
+
+
+
 
 @code {
     [Parameter]
@@ -27,9 +34,25 @@
     [Parameter]
     public EventCallback<string> DeleteProduct { get; set; }
 
-    private void Delete()
+    private bool isDeleteConfirmationVisible = false;
+    private DeleteConfirmation confirmationModal;
+
+    private void ShowDeleteConfirmation()
     {
-        DeleteProduct.InvokeAsync(Product.ProductId);
+        isDeleteConfirmationVisible = true;
+    }
+
+    private async Task ConfirmDeleteHandler(bool confirmed)
+    {
+        if (confirmed)
+        {
+            DeleteProduct.InvokeAsync(Product.ProductId);
+        }
+
+        isDeleteConfirmationVisible = false;
+        confirmationModal.Hide();
+
+        navManager.NavigateTo($"./productlist");
     }
 
     public void Edit()
