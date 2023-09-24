@@ -1,0 +1,42 @@
+﻿@using ProductCard.Data;
+@using ProductCard.Models;
+@inject ProductService productService;
+
+@foreach (var product in productList)
+{
+    <div class="row  m-5">
+        <div class="col-2">
+            <img src="@product.Image" style="width:250px; height:250px;" />
+        </div>
+        <div class="col-8">
+            <p class="m-5 align-items-center">@product.ProductName</p>
+            <div class="m-5">
+                
+                    <select id='number-dd' name='number'>
+                        <option value='1'>1</option>
+                        <option value='2'>2</option>
+                        <option value='3'>3</option>
+                        <option value='4'>4</option>
+                    </select>
+                
+                <i class="fa-solid fa-pencil m-5"></i>
+                <i class="fa-solid fa-x m-5"></i>
+            </div>
+           
+        </div>
+        <div class="col-2">
+            <p>$@product.Price</p>
+        </div>
+    </div>
+}
+
+@code{
+
+    private List<Product> productList;
+
+    protected override void OnInitialized()
+    {
+        productList = productService.GetProducts();
+        base.OnInitialized();
+    }
+}

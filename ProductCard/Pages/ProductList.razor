@@ -30,17 +30,23 @@ else
         @foreach (var product in productList)
         {
             <tr>
-                <ProductDetail Product="product" DeleteProduct="DeleteProduct"></ProductDetail>
+                <ProductDetail Product="product" DeleteProduct="@DeleteProduct"></ProductDetail>
             </tr>
         }
     </table>
 }
 
+<DeleteConfirmation @ref="deleteConfirmation" OnConfirmed="OnDeleteConfirmed"></DeleteConfirmation>
+
 
 
 
 @code {
+    private DeleteConfirmation deleteConfirmation;
+
     private List<Product> productList;
+
+    private bool displayProducts = true;
 
     protected override void OnInitialized()
     {
@@ -53,4 +59,20 @@ else
         productService.DeleteProduct(productId);
         productList.RemoveAll(a => a.ProductName == productId);
     }
- }
+
+    private async Task RequestPermission(Product product)
+    {
+        deleteConfirmation.BodyContent = $"Do you need to delete {product.ProductName} from the list";
+        deleteConfirmation.ProductToDelete = product;
+        deleteConfirmation.Show();
+    }
+
+    public void Show() => displayProducts = true;
+    public void Hide() => displayProducts = false;
+
+    private async Task OnDeleteConfirmed(Product product)
+    {
+        productList.Remove(product);
+        deleteConfirmation.Hide();
+    }
+}
