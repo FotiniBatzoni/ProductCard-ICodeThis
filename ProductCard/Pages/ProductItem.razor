@@ -1,0 +1,32 @@
+﻿@using ProductCard.Data;
+@inject ProductService productService;
+@inject NavigationManager navManager;
+
+<td>
+    @Product.ProductName
+</td>
+<td>
+    @Product.Price
+</td>
+<td>
+    <img style="width:150px; height:150px" src="@Product.Image" />
+
+</td>
+<td>
+    <button class="btn btn-lg" style="background-color:rgba(131,58,180,1); color:white" @onclick="Add">Add To Basket</button>
+</td>
+
+<hr style="color:rgba(217,108,233,1)" />
+
+
+
+
+@code {
+    [Parameter]
+    public Product Product { get; set; }
+
+    public void Add()
+    {
+        navManager.NavigateTo($"./update-product/{Product.ProductId}");
+    }
+}

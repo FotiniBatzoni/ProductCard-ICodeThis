@@ -3,10 +3,13 @@ using MongoDB.Bson;
 
 namespace ProductCard.Data
 {
-    public class ProductCart
+    public class CartItem
     {
         [BsonId, BsonElement("_id"), BsonRepresentation(BsonType.ObjectId)]
-        public string CartProductId { get; set; }
+        public string CartItemId { get; set; }
+
+        [BsonId, BsonElement("cart_id"), BsonRepresentation(BsonType.ObjectId)]
+        public string CartId { get; set; }
 
         [BsonElement("quantity"), BsonRepresentation(BsonType.Int32)]
         public int Quantity { get; set; }

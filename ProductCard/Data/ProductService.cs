@@ -4,15 +4,12 @@ namespace ProductCard.Data
 {
     public class ProductService
     {
-        IMongoCollection<Product> _products;
+     
+        private readonly IMongoCollection<Product> _products;
 
-        public ProductService(IConfiguration configuration)
+        public ProductService(MongoDbClient mongoDbClient)
         {
-            var connectionString = configuration.GetConnectionString("DbConnection");
-            var databaseName = "ProductCartICodeThis";
-            var mongoClient = new MongoClient(connectionString);
-            var database = mongoClient.GetDatabase(databaseName);
-            _products = database.GetCollection<Product>("product");
+            _products = mongoDbClient.GetProductCollection();
         }
 
         public List<Product> GetProducts()

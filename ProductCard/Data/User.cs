@@ -18,10 +18,10 @@ namespace ProductCard.Data
         [BsonElement("passsword"), BsonRepresentation(BsonType.String)]
         public string Password { get; set; }
 
-        [BsonElement("passsword_hash"), BsonRepresentation(BsonType.String)]
-        public string PasswordHash { get; set; }
-
         [BsonElement("role"), BsonRepresentation(BsonType.String)]
         public string Role { get; set; }
+
+        [BsonElement("token"), BsonRepresentation(BsonType.String)]
+        public string Token { get; set; }
     }
 }

@@ -1,6 +1,6 @@
+using MongoDB.Driver;
 using ProductCard.Data;
-
-
+using ProductCard.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +35,10 @@ static void ConfigureServices(IServiceCollection services)
 {
     services.AddRazorPages();
     services.AddServerSideBlazor();
-
+    services.AddSingleton<MongoDbClient>();
+    services.AddTransient<UserService>();
     services.AddTransient<ProductService>();
+    services.AddTransient<CartItemService>();
+    services.AddTransient<CartService>();
+    services.AddTransient<TokenHelper>();
 }

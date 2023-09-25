@@ -2,33 +2,6 @@
 @using ProductCard.Models;
 @inject ProductService productService;
 
-@*
-@foreach (var product in productList)
-{
-    <div class="row">
-        <div class="col">
-            <img src="@product.Image" style="width: 250px; height: 250px;" />
-        </div>
-        <div class="col">
-            <p class="m-5 align-items-center">@product.ProductName</p>
-            <div class="m-5">
-                <select id='number-dd-@product.ProductId' name='number'>
-                    <option value='1'>1</option>
-                    <option value='2'>2</option>
-                    <option value='3'>3</option>
-                    <option value='4'>4</option>
-                </select>
-                <i class="fas fa-pencil-alt m-5"></i>
-                <i class="fas fa-times m-5"></i>
-            </div>
-        </div>
-        <div class="col">
-            <p>$@product.Price</p>
-        </div>
-    </div>
-}*@
-
-
 <div class="container">
     @foreach (var product in productList)
     {
@@ -45,8 +18,13 @@
                         <option value='3'>3</option>
                         <option value='4'>4</option>
                     </select>
-                    <i class="fas fa-pencil-alt m-3"></i>
-                    <i class="fas fa-times m-3"></i>
+                    <a href="/EditItem"> 
+                        <i class="fas fa-pencil-alt m-3"></i>
+                        </a>
+                    <a href="/DeleteItem">
+                        <i class="fas fa-times m-3"></i>
+                    </a>
+               
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">

@@ -1,0 +1,43 @@
+﻿@page "/register"
+
+@using ProductCard.Data;
+@using ProductCard.Models;
+@using ProductCard.Helpers;
+@inject IJSRuntime JsRuntime;
+@inject UserService userService;
+@inject NavigationManager navManager;
+
+
+<Register User="user" SaveUser="SaveUser"></Register>
+
+
+@code {
+    private UserViewModel user;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        user = new UserViewModel();
+    }
+
+    private async Task SaveUser(UserViewModel userViewModel)
+    {
+        var user = userService.GetUserByEmail(userViewModel.Email);
+        if (user != null)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "The user already exists!"); // Alert
+            return;
+        }
+
+        var hashedPassword = PasswordHelper.HashPassword(userViewModel.Password);
+        userService.AddUser(new User
+            {
+                UserName = userViewModel.UserName,
+                Email = userViewModel.Email,
+                Password = hashedPassword,
+                Role="1"
+            });
+
+        navManager.NavigateTo("./productlist");
+    }
+}
