@@ -8,7 +8,7 @@
 </div>
 
 <div class="d-flex justify-content-center">
-    <EditForm Model="@User" OnValidSubmit="@Submit">
+    <EditForm Model="@User" OnValidSubmit="Submit" OnInvalidSubmit="Submit">
         <DataAnnotationsValidator />
 
         <div class="form-group">

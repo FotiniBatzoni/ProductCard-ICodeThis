@@ -65,3 +65,15 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+
+/* Define a CSS class for horizontal navigation */
+.horizontal-nav {
+    display: flex;
+    justify-content: space-between; /* To evenly space the items horizontally */
+}
+
+    /* Style the individual navigation items */
+    .horizontal-nav .nav-item {
+        margin-right: 10px; /* Adjust the spacing between items as needed */
+    }

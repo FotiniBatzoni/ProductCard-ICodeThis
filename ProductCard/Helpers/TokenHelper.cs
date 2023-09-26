@@ -9,20 +9,27 @@ namespace ProductCard.Helpers
     public  class TokenHelper
     {
         private const string SecretKey = "your-secret-key";
-        private readonly SymmetricSecurityKey _securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
+        JwtSecurityTokenHandler _tokenHandler = new JwtSecurityTokenHandler();
 
-        public string GenerateToken(string userId)
+        public string GenerateToken(string userId, string username, string role)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var claims = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, userId) });
-            var tokenDescriptor = new SecurityTokenDescriptor
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
             {
-                Subject = claims,
-                Expires = DateTime.UtcNow.AddHours(1), // Set token expiration time
-                SigningCredentials = new SigningCredentials(_securityKey, SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            new Claim(ClaimTypes.Name,username ),
+            new Claim(ClaimTypes.Role,role),
+            new Claim(ClaimTypes.NameIdentifier,userId),
+        };
+
+            var token = new JwtSecurityToken(
+   
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(120),
+                signingCredentials: credentials);
+
+            return _tokenHandler.WriteToken(token);
         }
     }
 }

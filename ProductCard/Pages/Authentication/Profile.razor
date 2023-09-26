@@ -1,0 +1,17 @@
+﻿@page "/profile"
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<h1>User Profile</h1>
+<p>Welcome, @userName!</p>
+
+@code {
+    private string userName;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        userName = authState.User.Identity.Name;
+    }
+}
+

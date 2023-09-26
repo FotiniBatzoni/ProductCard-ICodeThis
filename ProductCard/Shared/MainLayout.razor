@@ -1,12 +1,34 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager navManager
 
 <PageTitle>ProductCard</PageTitle>
 
 <div class="page">
     <div>
-        <NavigationBar></NavigationBar>
+        <NavigationBar UserEmail="@userEmail"></NavigationBar>
     </div>
 </div>
 <main>
     @Body
 </main>
+
+
+@code {
+    private string userEmail;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity != null && user.Identity.IsAuthenticated)
+        {
+            userEmail = user.FindFirst(ClaimTypes.Email)?.Value;
+        }
+        
+
+    }
+}
